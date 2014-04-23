@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.add_dependency "curb"
   s.add_dependency "json"
   s.add_dependency "uuid"
+  s.add_dependency "pry"
 end
