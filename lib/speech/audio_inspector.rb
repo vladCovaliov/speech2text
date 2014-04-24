@@ -1,4 +1,6 @@
 # -*- encoding: binary -*-
+require 'pry'
+
 module Speech
 
   class AudioInspector
@@ -43,19 +45,19 @@ module Speech
 #        puts "total: #{self.to_f} + #{b.to_f} = #{total.inspect}"
         Duration.from_seconds(self.to_f + b.to_f)
       end
-
     end
 
     def initialize(file)
       out = `ffmpeg -i #{file} 2>&1`.strip
+      out.encode!('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+      
       if out.match(/No such file or directory/)
         raise "No such file or directory: #{file}"
-      else
+      else      
         out = out.scan(/Duration: (.*),/)
         self.duration = Duration.new(out.first.first)
       end
     end
-
   end
 end
 
